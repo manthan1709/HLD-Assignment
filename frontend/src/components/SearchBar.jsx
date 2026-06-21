@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -44,7 +46,7 @@ function SearchBar() {
         setLoading(true);
 
         const res = await axios.get(
-          `http://localhost:3000/suggest?q=${debouncedQuery}`
+          `${API_URL}/suggest?q=${debouncedQuery}`
         );
 
         setSuggestions(res.data);
@@ -63,7 +65,7 @@ function SearchBar() {
 
     try {
       await axios.post(
-        "http://localhost:3000/search",
+        `${API_URL}/search`,
         {
           query,
         }
@@ -163,14 +165,8 @@ function SearchBar() {
       </button>
 
       {recentSearches.length > 0 && (
-        <div
-          style={{
-            marginTop: "20px",
-          }}
-        >
-          <h3>
-            🕒 Recent Searches
-          </h3>
+        <div style={{ marginTop: "20px" }}>
+          <h3>🕒 Recent Searches</h3>
 
           {recentSearches.map(
             (item) => (

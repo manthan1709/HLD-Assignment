@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Trending() {
   const [trending, setTrending] = useState([]);
 
@@ -11,7 +13,7 @@ function Trending() {
   const fetchTrending = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/trending"
+        `${API_URL}/trending`
       );
 
       setTrending(res.data);
@@ -25,8 +27,8 @@ function Trending() {
       <h2 className="trending-title">
         🔥 Trending Searches
       </h2>
-  
-      {trending.map((item, index) => (
+
+      {trending.map((item) => (
         <div
           key={item._id}
           className="trending-item"
